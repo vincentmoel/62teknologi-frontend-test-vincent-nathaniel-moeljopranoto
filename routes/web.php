@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HospitalController;
@@ -24,27 +25,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-
-Route::post('/login', [AuthController::class, 'authenticate']);
-
-Route::group(['middleware' => 'auth_api'], function () {
-
-
-
-    Route::group(['middleware' => 'revalidate'], function () {
-
-        Route::get('/', [DashboardController::class, 'index']);
-
-
-        Route::resource('/hospitals', HospitalController::class);
-        
-
-    });
-
-
-    Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/', function(){
+    return view('welcome');
 });
+Route::get('/businesses', [BusinessController::class, 'index']);
+Route::get('/businesses/{alias}', [BusinessController::class, 'show']);
 
 Route::group(['middleware' => 'revalidate'], function () {
 
